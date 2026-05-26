@@ -31,7 +31,7 @@ $idx = [int](Read-Host "Enter adapter InterfaceIndex")
 $adapter = $adapters | Where-Object { $_.InterfaceIndex -eq $idx }
 if (-not $adapter) { throw "No adapter with InterfaceIndex $idx found." }
 
-Write-Host "`nReading state of: $($adapter.Name) — $($adapter.InterfaceDescription)`n"
+Write-Host "`nReading state of: $($adapter.Name) - $($adapter.InterfaceDescription)`n"
 
 $n = $adapter.Name
 
@@ -41,10 +41,10 @@ function Get-Prop([string]$adapterName, [string]$displayName) {
         $prop = Get-NetAdapterAdvancedProperty -Name $adapterName -ErrorAction Stop |
                 Where-Object { $_.DisplayName -eq $displayName }
         if ($prop) { return $prop.DisplayValue }
-        Write-Host "  [INFO]  '$displayName' not exposed by this driver — skipped"
+        Write-Host "  [INFO]  '$displayName' not exposed by this driver - skipped"
         return $null
     } catch {
-        Write-Host "  [INFO]  '$displayName' could not be read ($($_.Exception.Message)) — skipped"
+        Write-Host "  [INFO]  '$displayName' could not be read ($($_.Exception.Message)) - skipped"
         return $null
     }
 }
@@ -71,7 +71,7 @@ try {
         Enabled               = $rssObj.Enabled
         NumberOfReceiveQueues = $rssObj.NumberOfReceiveQueues
     }
-} catch { Write-Host "  [INFO]  RSS not readable ($($_.Exception.Message)) — skipped" }
+} catch { Write-Host "  [INFO]  RSS not readable ($($_.Exception.Message)) - skipped" }
 
 # ── LSO ───────────────────────────────────────────────────────────────────────
 $lso = $null
@@ -81,7 +81,7 @@ try {
         IPv4Enabled = $lsoObj.IPv4Enabled
         IPv6Enabled = $lsoObj.IPv6Enabled
     }
-} catch { Write-Host "  [INFO]  LSO not readable ($($_.Exception.Message)) — skipped" }
+} catch { Write-Host "  [INFO]  LSO not readable ($($_.Exception.Message)) - skipped" }
 
 # ── Flow Control ──────────────────────────────────────────────────────────────
 $flowControl = $null
@@ -92,7 +92,7 @@ try {
         RxEnabled     = $fcObj.RxEnabled
         TxEnabled     = $fcObj.TxEnabled
     }
-} catch { Write-Host "  [INFO]  Flow Control not readable ($($_.Exception.Message)) — skipped" }
+} catch { Write-Host "  [INFO]  Flow Control not readable ($($_.Exception.Message)) - skipped" }
 
 # ── Power Management ──────────────────────────────────────────────────────────
 # Cast enum values to string; without this they serialise as integers in JSON.
@@ -104,7 +104,7 @@ try {
         WakeOnMagicPacket            = [string]$pmObj.WakeOnMagicPacket
         WakeOnPattern                = [string]$pmObj.WakeOnPattern
     }
-} catch { Write-Host "  [INFO]  Power Management not readable ($($_.Exception.Message)) — skipped" }
+} catch { Write-Host "  [INFO]  Power Management not readable ($($_.Exception.Message)) - skipped" }
 
 # ── AFD socket receive buffer (registry) ─────────────────────────────────────
 # null means the key is absent and Windows uses its built-in default (~65536 bytes).
@@ -116,7 +116,7 @@ try {
     $afdReceiveWindow = (Get-ItemProperty -Path $afdKey `
         -Name "DefaultReceiveWindow" -ErrorAction Stop).DefaultReceiveWindow
 } catch {
-    Write-Host "  [INFO]  AFD DefaultReceiveWindow registry key not set — Windows built-in default is in effect"
+    Write-Host "  [INFO]  AFD DefaultReceiveWindow registry key not set - Windows built-in default is in effect"
 }
 
 # ── IPv4 configuration ────────────────────────────────────────────────────────

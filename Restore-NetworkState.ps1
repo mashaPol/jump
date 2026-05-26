@@ -56,7 +56,7 @@ Write-Host ""
 $adapter = Get-NetAdapter | Where-Object { $_.InterfaceIndex -eq $state.InterfaceIndex }
 
 if (-not $adapter) {
-    Write-Warning "InterfaceIndex $($state.InterfaceIndex) not found — trying by name '$($state.AdapterName)'..."
+    Write-Warning "InterfaceIndex $($state.InterfaceIndex) not found - trying by name '$($state.AdapterName)'..."
     $adapter = Get-NetAdapter | Where-Object { $_.Name -eq $state.AdapterName }
 }
 
