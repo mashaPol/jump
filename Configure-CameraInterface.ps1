@@ -146,10 +146,15 @@ catch {
 # (~64 KB) is too small; packets are silently dropped before the SDK reads them.
 # Setting 16 MB here means every new socket inherits a large buffer even if
 # the camera SDK does not call setsockopt(SO_RCVBUF) itself.
-$afdKey = "HKLM:\SYSTEM\CurrentControlSet\Services\AFD\Parameters"
-if (-not (Test-Path $afdKey)) { New-Item -Path $afdKey -Force | Out-Null }
-Set-ItemProperty -Path $afdKey -Name "DefaultReceiveWindow" -Value 16777216 -Type DWord
-Write-Host "  [OK]    AFD DefaultReceiveWindow = 16 MB (requires reboot)"
+try {
+    $afdKey = "HKLM:\SYSTEM\CurrentControlSet\Services\AFD\Parameters"
+    if (-not (Test-Path $afdKey)) { New-Item -Path $afdKey -Force | Out-Null }
+    Set-ItemProperty -Path $afdKey -Name "DefaultReceiveWindow" -Value 16777216 -Type DWord
+    Write-Host "  [OK]    AFD DefaultReceiveWindow = 16 MB (requires reboot)"
+}
+catch {
+    Write-Warning "  [SKIP]  AFD DefaultReceiveWindow -- $($_.Exception.Message)"
+}
 
 # ── Rename adapter ────────────────────────────────────────────────────────────
 Rename-NetAdapter -Name $n -NewName $newName -ErrorAction Stop
@@ -159,14 +164,21 @@ $n = $newName
 # ── Static IP ─────────────────────────────────────────────────────────────────
 # Remove any existing IPv4 addresses and default routes on this interface
 # before assigning the new static address.
-Get-NetIPAddress -InterfaceIndex $adapter.InterfaceIndex -AddressFamily IPv4 `
-    -ErrorAction SilentlyContinue | Remove-NetIPAddress -Confirm:$false
+try {
+    Get-NetIPAddress -InterfaceIndex $adapter.InterfaceIndex -AddressFamily IPv4 `
+        -ErrorAction SilentlyContinue | Remove-NetIPAddress -Confirm:$false
 
-Get-NetRoute -InterfaceIndex $adapter.InterfaceIndex -DestinationPrefix "0.0.0.0/0" `
-    -ErrorAction SilentlyContinue | Remove-NetRoute -Confirm:$false
+    Get-NetRoute -InterfaceIndex $adapter.InterfaceIndex -DestinationPrefix "0.0.0.0/0" `
+        -ErrorAction SilentlyContinue | Remove-NetRoute -Confirm:$false
 
-New-NetIPAddress -InterfaceAlias $n -IPAddress $ip -PrefixLength 24 | Out-Null
-Write-Host "  [OK]    Static IP = $ip/24"
+    New-NetIPAddress -InterfaceAlias $n -IPAddress $ip -PrefixLength 24 | Out-Null
+    Write-Host "  [OK]    Static IP = $ip/24"
+}
+catch {
+    Write-Warning "  [SKIP]  Static IP assignment failed -- $($_.Exception.Message)"
+    Write-Warning "          The adapter has been renamed to '$n' but has no IP address."
+    Write-Warning "          Assign $ip/24 manually or re-run the script."
+}
 
 # ── Summary ───────────────────────────────────────────────────────────────────
 Write-Host ""
