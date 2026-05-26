@@ -46,7 +46,7 @@ if (-not $adapter) { throw "No adapter with InterfaceIndex $idx found." }
 $newName = (Read-Host "New interface name").Trim()
 if ([string]::IsNullOrEmpty($newName)) { throw "Interface name cannot be empty." }
 
-$octet = Read-Host "Subnet octet  x  for  192.168.x.1  (1-254)"
+$octet = (Read-Host "Subnet octet  x  for  192.168.x.1  (1-254)").Trim()
 if ($octet -notmatch '^\d+$' -or [int]$octet -lt 1 -or [int]$octet -gt 254) {
     throw "Subnet octet must be an integer between 1 and 254."
 }
