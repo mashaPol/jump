@@ -52,7 +52,7 @@ function Get-Prop([string]$adapterName, [string]$displayName) {
 # ── NIC advanced properties ───────────────────────────────────────────────────
 $advancedProperties = [ordered]@{
     "Speed & Duplex"               = Get-Prop $n "Speed & Duplex"
-    "Jumbo Packet"                 = Get-Prop $n "Jumbo Packet"
+    "JumboPacket"                  = Get-Prop $n "JumboPacket"
     "Receive Buffers"              = Get-Prop $n "Receive Buffers"
     "Transmit Buffers"             = Get-Prop $n "Transmit Buffers"
     "Interrupt Moderation"         = Get-Prop $n "Interrupt Moderation"

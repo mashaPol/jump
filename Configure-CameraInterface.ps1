@@ -75,7 +75,7 @@ Set-Prop $n "Speed & Duplex" "1.0 Gbps Full Duplex"
 # ── Jumbo Frames ──────────────────────────────────────────────────────────────
 # 9014 = 9000-byte payload + Ethernet/VLAN headers.
 # Reduces CPU overhead per image payload; must also be enabled on the switch.
-Set-Prop $n "Jumbo Packet" "9014 Bytes"
+Set-Prop $n "JumboPacket" "9014 Bytes"
 
 # ── Ring Buffers (X550 maximum = 4096) ───────────────────────────────────────
 Set-Prop $n "Receive Buffers"  "4096"
