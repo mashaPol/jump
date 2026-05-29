@@ -42,7 +42,11 @@ if (-not $JsonPath) {
 
 if (-not (Test-Path $JsonPath)) { throw "File not found: $JsonPath" }
 
-$state = Get-Content -Path $JsonPath -Raw | ConvertFrom-Json
+try {
+    $state = Get-Content -Path $JsonPath -Raw | ConvertFrom-Json
+} catch {
+    throw "Failed to parse '$JsonPath': $($_.Exception.Message)"
+}
 
 Write-Host ""
 Write-Host "Snapshot : $(Split-Path $JsonPath -Leaf)"
@@ -161,8 +165,10 @@ if ($null -ne $state.AFD.DefaultReceiveWindow) {
 }
 
 # ── IPv4 addresses ────────────────────────────────────────────────────────────
-# @() forces an array in case ConvertFrom-Json collapsed a single entry to a scalar.
-$savedIPs = @($state.IPv4Addresses)
+# @(...| Where-Object ...) guards against two PS 5.1 ConvertFrom-Json quirks:
+#   - a single-element array is collapsed to a scalar
+#   - an empty array [] is deserialised as $null, making @($null).Count = 1
+$savedIPs = @($state.IPv4Addresses | Where-Object { $null -ne $_ })
 if ($savedIPs.Count -gt 0) {
     Get-NetIPAddress -InterfaceIndex $adapter.InterfaceIndex -AddressFamily IPv4 `
         -ErrorAction SilentlyContinue | Remove-NetIPAddress -Confirm:$false
