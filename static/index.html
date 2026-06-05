@@ -5,9 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>FastAPI Calculator</title>
   <link rel="stylesheet" href="/static/css/style.css" />
+  <link rel="stylesheet" href="/static/css/planner.css" />
 </head>
 <body>
-  <main class="calculator-app">
+  <nav class="planner-nav" style="font-family:Inter,system-ui,sans-serif">
+    <a href="/" class="active">Calculator</a>
+    <a href="/planner">Planner</a>
+  </nav>
+  <main class="calculator-app" style="margin-top:24px">
     <header>
       <h1>Calculator</h1>
       <p>FastAPI-powered calculator UI with JSON API backend.</p>

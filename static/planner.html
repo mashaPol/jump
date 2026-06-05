@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Availability &amp; Timetable Planner</title>
+  <link rel="stylesheet" href="/static/css/style.css" />
+  <link rel="stylesheet" href="/static/css/planner.css" />
+</head>
+<body>
+
+  <nav class="planner-nav">
+    <a href="/">Calculator</a>
+    <a href="/planner" class="active">Planner</a>
+  </nav>
+
+  <div class="planner-app">
+
+    <div class="tab-bar">
+      <button data-tab="locations" class="active">Locations</button>
+      <button data-tab="tasks">Tasks</button>
+      <button data-tab="people">People &amp; Availability</button>
+      <button data-tab="timetable">Timetable</button>
+    </div>
+
+    <!-- LOCATIONS TAB -->
+    <section id="tab-locations" class="tab-panel active">
+      <form class="add-form" id="location-form" autocomplete="off">
+        <div class="field">
+          <label for="loc-name">Name *</label>
+          <input id="loc-name" name="name" required placeholder="e.g. Main Hall" />
+        </div>
+        <div class="field">
+          <label for="loc-address">Address</label>
+          <input id="loc-address" name="address" placeholder="Street, City" />
+        </div>
+        <div class="field" style="max-width:200px">
+          <label for="loc-desc">Description</label>
+          <input id="loc-desc" name="description" placeholder="Optional" />
+        </div>
+        <div class="field" style="max-width:90px">
+          <label for="loc-cap">Capacity</label>
+          <input id="loc-cap" name="capacity" type="number" min="1" value="1" />
+        </div>
+        <button type="submit" class="btn-primary">Add Location</button>
+      </form>
+      <div class="card-list" id="locations-list"></div>
+    </section>
+
+    <!-- TASKS TAB -->
+    <section id="tab-tasks" class="tab-panel">
+      <form class="add-form" id="task-form" autocomplete="off">
+        <div class="field">
+          <label for="task-name">Name *</label>
+          <input id="task-name" name="name" required placeholder="e.g. Registration Desk" />
+        </div>
+        <div class="field" style="max-width:220px">
+          <label for="task-desc">Description</label>
+          <input id="task-desc" name="description" placeholder="Optional" />
+        </div>
+        <div class="field" style="max-width:110px">
+          <label for="task-dur">Duration (h) *</label>
+          <input id="task-dur" name="duration_hours" type="number" min="0.25" step="0.25" required placeholder="2" />
+        </div>
+        <div class="field" style="max-width:110px">
+          <label for="task-ppl">People needed</label>
+          <input id="task-ppl" name="people_needed" type="number" min="1" value="1" />
+        </div>
+        <button type="submit" class="btn-primary">Add Task</button>
+      </form>
+      <div class="card-list" id="tasks-list"></div>
+    </section>
+
+    <!-- PEOPLE TAB -->
+    <section id="tab-people" class="tab-panel">
+      <form class="add-form" id="person-form" autocomplete="off">
+        <div class="field">
+          <label for="person-name">Name *</label>
+          <input id="person-name" name="name" required placeholder="Full name" />
+        </div>
+        <div class="field">
+          <label for="person-email">Email</label>
+          <input id="person-email" name="email" type="email" placeholder="Optional" />
+        </div>
+        <button type="submit" class="btn-primary">Add Person</button>
+      </form>
+      <div class="card-list" id="people-list"></div>
+    </section>
+
+    <!-- TIMETABLE TAB -->
+    <section id="tab-timetable" class="tab-panel">
+      <div class="timetable-toolbar">
+        <button class="btn-primary" id="btn-generate">Generate Timetable</button>
+        <button class="btn-danger" id="btn-clear-all">Clear All</button>
+      </div>
+      <div class="timetable-wrap">
+        <div id="timetable-container"></div>
+      </div>
+    </section>
+
+  </div>
+
+  <div id="toast"></div>
+
+  <script src="/static/js/planner.js"></script>
+</body>
+</html>

@@ -1,0 +1,432 @@
+/* ── Layout ────────────────────────────────────────────────────────────── */
+
+body {
+  display: block;
+  padding: 0;
+}
+
+.planner-nav {
+  display: flex;
+  gap: 4px;
+  padding: 14px 24px;
+  background: rgba(14, 19, 28, 0.96);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.planner-nav a {
+  color: #8b949e;
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 500;
+  padding: 6px 14px;
+  border-radius: 8px;
+  transition: background 0.15s, color 0.15s;
+}
+
+.planner-nav a:hover {
+  background: rgba(255, 255, 255, 0.07);
+  color: #c9d1d9;
+}
+
+.planner-nav a.active {
+  background: linear-gradient(135deg, #7c3aed, #2563eb);
+  color: #fff;
+}
+
+.planner-app {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+/* ── Tab bar ───────────────────────────────────────────────────────────── */
+
+.tab-bar {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 24px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding-bottom: 0;
+  flex-wrap: wrap;
+}
+
+.tab-bar button {
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  color: #8b949e;
+  font-size: 0.95rem;
+  font-weight: 500;
+  padding: 10px 18px;
+  cursor: pointer;
+  transition: color 0.15s, border-color 0.15s;
+  margin-bottom: -1px;
+}
+
+.tab-bar button:hover {
+  color: #c9d1d9;
+}
+
+.tab-bar button.active {
+  color: #f0f6fc;
+  border-bottom-color: #7c3aed;
+}
+
+.tab-panel {
+  display: none;
+}
+
+.tab-panel.active {
+  display: block;
+}
+
+/* ── Add form ──────────────────────────────────────────────────────────── */
+
+.add-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: flex-end;
+  margin-bottom: 24px;
+  padding: 16px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 14px;
+}
+
+.add-form .field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+  min-width: 120px;
+}
+
+.add-form label {
+  font-size: 0.75rem;
+  color: #8b949e;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.add-form input,
+.add-form textarea,
+.add-form select {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(148, 163, 184, 0.18);
+  border-radius: 8px;
+  color: #f0f6fc;
+  font-size: 0.9rem;
+  padding: 8px 10px;
+  font-family: inherit;
+  transition: border-color 0.15s;
+}
+
+.add-form input:focus,
+.add-form textarea:focus,
+.add-form select:focus {
+  outline: none;
+  border-color: #7c3aed;
+}
+
+/* ── Buttons ───────────────────────────────────────────────────────────── */
+
+.btn-primary {
+  background: linear-gradient(135deg, #7c3aed, #2563eb);
+  border: none;
+  border-radius: 10px;
+  color: #fff;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 600;
+  padding: 9px 20px;
+  transition: opacity 0.15s, transform 0.1s;
+  white-space: nowrap;
+}
+
+.btn-primary:hover { opacity: 0.9; transform: translateY(-1px); }
+.btn-primary:active { transform: translateY(0); }
+
+.btn-danger {
+  background: rgba(248, 113, 113, 0.18);
+  border: 1px solid rgba(248, 113, 113, 0.25);
+  border-radius: 10px;
+  color: #fee2e2;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 500;
+  padding: 9px 20px;
+  transition: background 0.15s;
+  white-space: nowrap;
+}
+
+.btn-danger:hover { background: rgba(248, 113, 113, 0.28); }
+
+.btn-icon {
+  background: none;
+  border: none;
+  color: #8b949e;
+  cursor: pointer;
+  font-size: 1rem;
+  padding: 4px 7px;
+  border-radius: 6px;
+  transition: background 0.15s, color 0.15s;
+}
+
+.btn-icon:hover { background: rgba(255,255,255,0.08); color: #c9d1d9; }
+.btn-icon.delete:hover { background: rgba(248,113,113,0.18); color: #fee2e2; }
+.btn-icon.save { color: #4ade80; }
+.btn-icon.save:hover { background: rgba(74,222,128,0.12); }
+.btn-icon.cancel { color: #f87171; }
+
+/* ── Entity cards ──────────────────────────────────────────────────────── */
+
+.card-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.entity-card {
+  background: rgba(14, 19, 28, 0.96);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  padding: 14px 16px;
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.card-header .card-name {
+  font-weight: 600;
+  color: #f0f6fc;
+  flex: 1;
+}
+
+.card-meta {
+  font-size: 0.82rem;
+  color: #8b949e;
+  margin-top: 4px;
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.card-edit-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 10px;
+  align-items: flex-end;
+}
+
+.card-edit-row input,
+.card-edit-row select {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(148, 163, 184, 0.18);
+  border-radius: 7px;
+  color: #f0f6fc;
+  font-size: 0.88rem;
+  padding: 6px 9px;
+  font-family: inherit;
+  flex: 1;
+  min-width: 90px;
+}
+
+.card-edit-row input:focus,
+.card-edit-row select:focus {
+  outline: none;
+  border-color: #7c3aed;
+}
+
+/* ── Availability slots ────────────────────────────────────────────────── */
+
+.slots-section {
+  margin-top: 12px;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  padding-top: 10px;
+}
+
+.slots-toggle {
+  background: none;
+  border: none;
+  color: #8b949e;
+  cursor: pointer;
+  font-size: 0.82rem;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  transition: color 0.15s;
+}
+
+.slots-toggle:hover { color: #c9d1d9; }
+
+.slots-body {
+  display: none;
+  margin-top: 10px;
+}
+
+.slots-body.open { display: block; }
+
+.slot-add-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: flex-end;
+  margin-bottom: 10px;
+}
+
+.slot-add-form input {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(148,163,184,0.18);
+  border-radius: 7px;
+  color: #f0f6fc;
+  font-size: 0.85rem;
+  padding: 6px 9px;
+  font-family: inherit;
+}
+
+.slot-list {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.slot-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.83rem;
+  color: #8b949e;
+}
+
+.slot-row .slot-text { flex: 1; }
+
+/* ── Timetable ─────────────────────────────────────────────────────────── */
+
+.timetable-toolbar {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.timetable-toolbar .spacer { flex: 1; }
+
+.timetable-wrap {
+  overflow-x: auto;
+}
+
+.timetable-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.88rem;
+}
+
+.timetable-table th {
+  text-align: left;
+  padding: 10px 12px;
+  color: #8b949e;
+  font-weight: 500;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+.timetable-table td {
+  padding: 10px 12px;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  color: #c9d1d9;
+  vertical-align: middle;
+}
+
+.timetable-table tr:hover td {
+  background: rgba(255,255,255,0.025);
+}
+
+.timetable-table tr.row-manual td:first-child {
+  border-left: 2px solid #7c3aed;
+  padding-left: 10px;
+}
+
+.timetable-table td input,
+.timetable-table td select {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(148,163,184,0.2);
+  border-radius: 6px;
+  color: #f0f6fc;
+  font-size: 0.86rem;
+  padding: 4px 7px;
+  font-family: inherit;
+  width: 100%;
+  min-width: 80px;
+}
+
+.timetable-table td input:focus,
+.timetable-table td select:focus {
+  outline: none;
+  border-color: #7c3aed;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 48px 24px;
+  color: #8b949e;
+  font-size: 0.92rem;
+  line-height: 1.7;
+}
+
+.empty-state strong {
+  display: block;
+  font-size: 1.05rem;
+  color: #c9d1d9;
+  margin-bottom: 6px;
+}
+
+.badge-manual {
+  font-size: 0.7rem;
+  background: rgba(124,58,237,0.2);
+  color: #a78bfa;
+  border-radius: 4px;
+  padding: 1px 5px;
+  margin-left: 4px;
+  vertical-align: middle;
+}
+
+/* ── Error toast ───────────────────────────────────────────────────────── */
+
+#toast {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%) translateY(60px);
+  background: rgba(248,113,113,0.9);
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 10px;
+  font-size: 0.88rem;
+  pointer-events: none;
+  transition: transform 0.25s ease, opacity 0.25s;
+  opacity: 0;
+  z-index: 100;
+}
+
+#toast.show {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+}
+
+@media (max-width: 600px) {
+  .planner-app { padding: 14px; }
+  .add-form { padding: 12px; }
+  .timetable-toolbar { gap: 8px; }
+}
